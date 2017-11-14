@@ -247,8 +247,8 @@ namespace dCareProject.Controllers {
             var query = from o in db.預約表
                         join p in db.醫生 on o.醫生ID equals p.ID
                         join c in db.看診紀錄表 on o.看診紀錄表ID equals c.ID
-                      
-                        where o.病人ID == 3
+
+                        where o.病人ID == 3 && o.報到結果 == null
                         select new patient {
                             section = p.科別,
                             date = o.登記時間.Value,
@@ -256,15 +256,30 @@ namespace dCareProject.Controllers {
                             healhdate = c.健檢時間,
                             patientid = o.ID,
                             temperture = c.體溫,
-                            weigh =c.體重,
+                            weigh = c.體重,
                             jump = c.脈搏,
-                            spo2 =c.血氧
+                            spo2 = c.血氧
                         };
-                        ViewBag.name = query.ToList();
-                        return View();
+            ViewBag.name = query.ToList();
+
+
+            var query1 = from o in db.預約表
+                         join p in db.醫生 on o.醫生ID equals p.ID
+                         join c in db.看診紀錄表 on o.看診紀錄表ID equals c.ID
+
+                         where o.病人ID == 3
+                         select new patient {
+                             section = p.科別,
+                             doctor = p.姓名,
+                             healhdate = c.健檢時間,
+                             patientid = o.ID,
+
+                         };
+            ViewBag.value = query1.ToList();
+            return View();
         }
-        
-         public ActionResult look1(int id) {
+
+        public ActionResult look1(int id) {
             var query = from p in db.醫生
                         join o in db.預約表 on p.ID equals o.醫生ID
                         where o.ID==id
@@ -275,7 +290,8 @@ namespace dCareProject.Controllers {
                             section = p.科別,
                             docname =p.姓名
                         };
-            ViewBag.name = query.ToList();
+               ViewBag.name = query.ToList();
+
                return View();
         }
         [HttpPost]

@@ -48,22 +48,22 @@
                                     <th>修改預約</th>
                                 </tr>
                             </thead>
-                            
+
                             <tbody>
                                 @foreach (patient row in ViewBag.name) {
                                     <tr>
                                         <td>@row.date</td>
                                         <td>@row.section</td>
                                         <td>@row.doctor</td>
-                                        <td ><a href="look1/@row.patientid">修改預約</a></td>
+                                        <td><a href="look1/@row.patientid">修改預約</a></td>
                                     </tr>
                                 }
 
-                              
+
 
 
                         </table>
-                        
+
                     </div>
 
                     <div class="frame" id="frame_2">
@@ -75,7 +75,7 @@
                                     <th>醫生</th>
                                 </tr>
                             </thead>
-                            
+
                             <tbody>
                                 @foreach (patient row in ViewBag.name) {
                                     <tr>
@@ -91,99 +91,100 @@
                     <div class="frame" id="frame_3">
                         <div id="container" style="width:700px; height: 400px; margin: 0 auto"></div>
                         <script language="JavaScript">
-    $(document).ready(function() {
-        var title = {
-            text: 'dCare 健檢紀錄'
-        };
-        var subtitle = {
-            text: ''
-        };
-        var xAxis = {
-            categories: [@foreach (var row in query) {
-                            @(row.用藥紀錄+",")
+                            $(document).ready(function () {
+                                var title = {
+                                    text: 'dCare 健檢紀錄'
+                                };
+                                var subtitle = {
+                                    text: ''
+                                };
+                                var xAxis = {
+                                    categories: [@foreach (var row in query) {
+                                        @row.健檢時間.ToString("yyyy") @row.健檢時間.ToString("MM") @row.健檢時間.ToString("dd,")
 
             }
-                
 
-                
-                
-            ]
-        };
-        var yAxis = {
-            title: {
-                text: ''
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        };
 
-        var tooltip = {
-            valueSuffix: ''
-        }
 
-        var legend = {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        };
 
-        var series =  [
-           {
-               name: '體溫/。C',
-               data: [
+                                    ]
+                                };
+                                var yAxis = {
+                                    title: {
+                                        text: ''
+                                    },
+                                    plotLines: [{
+                                        value: 0,
+                                        width: 1,
+                                        color: '#808080'
+                                    }]
+                                };
 
-                   @foreach (var row in query) {
+                                var tooltip = {
+                                    valueSuffix: ''
+                                }
+
+                                var legend = {
+                                    layout: 'vertical',
+                                    align: 'right',
+                                    verticalAlign: 'middle',
+                                    borderWidth: 0
+                                };
+
+                                var series = [
+                                   {
+                                       name: '體溫/。C',
+                                       data: [
+
+                                           @foreach (var row in query) {
                             @(row.體溫+",")
 
                                }
 
 
 
-               ]},
+                                       ]
+                                   },
 
-          {
-              name: '血氧/SPO2',
-              data: [
-                  @foreach (var row in query) {
+                                  {
+                                      name: '血氧/SPO2',
+                                      data: [
+                                          @foreach (var row in query) {
                             @(row.血氧+",")
                         }
 
-              ]
-          },
-          {
-              name: '體重/KG',
-              data: [
-              @foreach (var row in query) {
+                                      ]
+                                  },
+                                  {
+                                      name: '體重/KG',
+                                      data: [
+                                      @foreach (var row in query) {
                             @(row.體重+",")
 
-    } ]
-          },
-          {
-              name: '脈搏/m',
-              data: [
-              @foreach (var row in query) {
+    }]
+                                  },
+                                  {
+                                      name: '脈搏/m',
+                                      data: [
+                                      @foreach (var row in query) {
                             @(row.脈搏+",")
                         }
-     ]
-          }
-        ];
-        
-        var json = {};
+                                      ]
+                                  }
+                                ];
 
-                   json.title = title;
-        json.subtitle = subtitle;
-        json.xAxis = xAxis;
-        json.yAxis = yAxis;
-        json.tooltip = tooltip;
-        json.legend = legend;
-        json.series = series;
+                                var json = {};
 
-        $('#container').highcharts(json);
-    })
+                                json.title = title;
+                                json.subtitle = subtitle;
+                                json.xAxis = xAxis;
+                                json.yAxis = yAxis;
+                                json.tooltip = tooltip;
+                                json.legend = legend;
+                                json.series = series;
+
+                                $('#container').highcharts(json);
+                            })
                         </script>
 
 
